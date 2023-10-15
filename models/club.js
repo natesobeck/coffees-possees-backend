@@ -18,7 +18,7 @@ const clubSchema = new Schema({
     type: Schema.Types.ObjectId, ref: 'Profile'
   },
 
-  // coffeeShops: [{ type: Schema.Types.ObjectId, ref: 'CoffeeShop' }],
+  coffeeShops: [{ type: Schema.Types.ObjectId, ref: 'CoffeeShop' }],
 
   timeOfDay: {
     type: String,
