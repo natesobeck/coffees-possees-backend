@@ -12,8 +12,12 @@ router.get('/:coffeeShopId', coffeeShopCtrl.show)
 /*---------- Protected Routes ----------*/
 router.use(decodeUserFromToken)
 router.post('/', checkAuth, coffeeShopCtrl.create)
-router.put('/:coffeeShopId', checkAuth, coffeeShopCtrl.update)
-router.delete('/:coffeeShopId', checkAuth, coffeeShopCtrl.deleteShop)
+router.post('/:coffeeShopId/reviews',checkAuth, coffeeShopCtrl.createReview)
 
+router.put('/:coffeeShopId', checkAuth, coffeeShopCtrl.update)
+router.put('/:coffeeShopId/reviews/:reviewId', checkAuth, coffeeShopCtrl.updateReview)
+
+router.delete('/:coffeeShopId', checkAuth, coffeeShopCtrl.deleteShop)
+router.delete('/:coffeeShopId/reviews/:reviewId', checkAuth, coffeeShopCtrl.deleteReview)
 
 export { router }
