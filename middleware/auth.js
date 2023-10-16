@@ -9,7 +9,7 @@ const decodeUserFromToken = (req, res, next) => {
   token = token.replace('Bearer ', '')
   jwt.verify(token, SECRET, (err, decoded) => {
     if (err) return next(err)
-
+    
     req.user = decoded.user
     next()
   })

@@ -17,7 +17,7 @@ const clubSchema = new Schema({
   addedBy: {
     type: Schema.Types.ObjectId, ref: 'Profile'
   },
-
+  description: {type: String, required: true},
   coffeeShops: [{ type: Schema.Types.ObjectId, ref: 'CoffeeShop' }],
 
   timeOfDay: {

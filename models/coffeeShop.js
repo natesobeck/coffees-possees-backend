@@ -18,7 +18,7 @@ const reviewSchema = new Schema({
   },
   coffeeShopAmbience: {
     type: String,
-    enum: ['Spacious', 'Cozy', 'Loud', 'Cramped', 'Relaxing', 'Quiet']
+    enum: ['Spacious', 'Cozy', 'Loud', 'Relaxing', 'Quiet']
   },
   addedBy: { type: Schema.Types.ObjectId, ref: 'Profile' }
 }, { timestamps: true })
@@ -32,13 +32,13 @@ const coffeeShopSchema = new Schema({
   address: {
     street: { type: String, required: true },
     city: { type: String, required: true },
-    state: {type: String, required: true},
+    state: { type: String, required: true },
     zipCode: { type: String, required: true }
   },
   location: { type: String },
   addedBy: { type: Schema.Types.ObjectId, ref: 'Profile' },
   clubs: [{ type: Schema.Types.ObjectId, ref: 'Club' }],
-  comments: [reviewSchema]
+  reviews: [reviewSchema]
 })
 
 
