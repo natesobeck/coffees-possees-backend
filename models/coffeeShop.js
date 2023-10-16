@@ -2,7 +2,7 @@ import mongoose from "mongoose"
 
 const Schema = mongoose.Schema
 
-const commentSchema = new Schema({
+const reviewSchema = new Schema({
   text: {
     type: String,
     required: true
@@ -32,12 +32,13 @@ const coffeeShopSchema = new Schema({
   address: {
     street: { type: String, required: true },
     city: { type: String, required: true },
+    state: {type: String, required: true},
     zipCode: { type: String, required: true }
   },
   location: { type: String },
   addedBy: { type: Schema.Types.ObjectId, ref: 'Profile' },
   clubs: [{ type: Schema.Types.ObjectId, ref: 'Club' }],
-  comments: [commentSchema]
+  comments: [reviewSchema]
 })
 
 
