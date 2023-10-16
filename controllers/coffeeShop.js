@@ -76,7 +76,7 @@ async function createReview(req, res) {
     res.status(201).json(newReview)
   } catch (error) {
     console.log(error);
-    
+
     res.status(500).json(error)
   }
 }
@@ -84,7 +84,7 @@ async function createReview(req, res) {
 async function updateReview(req, res) {
   try {
     req.body.addedBy = req.user.profile
-    const selectedShop = CoffeeShop.findById(req.params.coffeeShopId)
+    const selectedShop = await CoffeeShop.findById(req.params.coffeeShopId)
     // Find review by reviewId and updated
     // const selectedReview = selectedShop.reviews.id(req.params.reviewId)
     selectedShop.reviews.map(review => {
@@ -101,13 +101,13 @@ async function updateReview(req, res) {
 
 async function deleteReview(req, res) {
   try {
-    const selectedShop = CoffeeShop.findById(req.params.coffeeShopId)
-
+    const selectedShop = await CoffeeShop.findById(req.params.coffeeShopId)
     //Using filter to get an array without the reviewId
-    const newReviews = selectedShop.reviews.filter(review => review._id !== req.params.reviewId)
-    selectedShop.reviews = newReviews
+    // selectedShop.reviews = selectedShop.reviews.filter(review => review._id !== req.params.reviewId)
+    const selectedReview = selectedShop.reviews.id(req.params.reviewId)
+    selectedShop.reviews.remove(selectedReview)
     await selectedShop.save()
-    res.status(200).json(selectedShop)
+    res.status(200).json(selectedReview)
   } catch (error) {
     res.status(500).json(error)
   }
