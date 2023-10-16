@@ -3,7 +3,7 @@ import { Club } from "../models/club.js"
 
 async function index(req, res) {
   try {
-    const clubs = await Club.find({}).populate('author')
+    const clubs = await Club.find({}).populate('addedBy')
     res.status(200).json(clubs)
   } catch (error) {
     console.log(error)
@@ -13,13 +13,13 @@ async function index(req, res) {
 
 async function create(req, res) {
   try {
-    req.body.author = req.user.profile
+    req.body.addedBy = req.user.profile
     const club = await Club.create(req.body)
     // Find profile and push club to array
     const profile = await Profile.findByIdAndUpdate(req.user.profile,
       { $push: { clubs: club } }, { new: true })
-    // Add author's profile to club's author
-    club.author = profile
+    // Add addedBy's profile to club's addedBy
+    club.addedBy = profile
     res.status(201).json(club)
 
   } catch (error) {
@@ -31,7 +31,7 @@ async function create(req, res) {
 async function show(req, res) {
   try {
     const selectedClub = await Club.findById(req.params.clubId)
-      .populate('author')
+      .populate('addedBy')
     res.status(200).json(selectedClub)
 
   } catch (error) {
@@ -42,10 +42,10 @@ async function show(req, res) {
 
 async function update(req, res) {
   try {
-    const selectedClub = await Club.findByIdAndDelete(
+    const selectedClub = await Club.findByIdAndUpdate(
       req.params.clubId,
       req.body, { new: true }
-    ).populate('author')
+    ).populate('addedBy')
     res.status(201).json(selectedClub)
 
   } catch (error) {

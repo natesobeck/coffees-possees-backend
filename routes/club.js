@@ -1,6 +1,6 @@
 import { Router } from 'express'
-import { decodeUserFromToken, checkAuth } from '../middleware/auth.js'
 import * as clubCtrl from '../controllers/club.js'
+import { decodeUserFromToken, checkAuth } from '../middleware/auth.js'
 
 const router = Router()
 
@@ -11,7 +11,7 @@ router.get('/:clubId', clubCtrl.show)
 
 /*---------- Protected Routes ----------*/
 router.use(decodeUserFromToken)
-router.get('/', checkAuth, clubCtrl.create)
+router.post('/', checkAuth, clubCtrl.create)
 router.put('/:clubId', checkAuth, clubCtrl.update)
 router.delete('/:clubId', checkAuth, clubCtrl.deleteClub)
 
