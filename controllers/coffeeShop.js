@@ -83,17 +83,11 @@ async function createReview(req, res) {
 
 async function updateReview(req, res) {
   try {
-    req.body.addedBy = req.user.profile
     const selectedShop = await CoffeeShop.findById(req.params.coffeeShopId)
-    // Find review by reviewId and updated
-    // const selectedReview = selectedShop.reviews.id(req.params.reviewId)
-    selectedShop.reviews.map(review => {
-      if (review._id === req.params.reviewId) {
-        review.set(req.params)
-      }
-    })
+    const selectedReview = selectedShop.reviews.id(req.params.reviewId)
+    selectedReview.set(req.body)
     await selectedShop.save()
-    res.json(201).json(selectedShop)
+    res.status(201).json(selectedReview)
   } catch (error) {
     res.status(500).json(error)
   }
@@ -102,8 +96,6 @@ async function updateReview(req, res) {
 async function deleteReview(req, res) {
   try {
     const selectedShop = await CoffeeShop.findById(req.params.coffeeShopId)
-    //Using filter to get an array without the reviewId
-    // selectedShop.reviews = selectedShop.reviews.filter(review => review._id !== req.params.reviewId)
     const selectedReview = selectedShop.reviews.id(req.params.reviewId)
     selectedShop.reviews.remove(selectedReview)
     await selectedShop.save()
