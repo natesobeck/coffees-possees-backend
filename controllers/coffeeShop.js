@@ -30,7 +30,7 @@ async function create(req, res) {
 async function show(req, res) {
   try {
     const selectedShop = await CoffeeShop.findById(req.params.coffeeShopId)
-      .populate('addedBy')
+      .populate([{path:'addedBy'}, {path:'clubs'}, {path:'reviews.addedBy'}])
     res.status(200).json(selectedShop)
   } catch (error) {
     console.log(error)
