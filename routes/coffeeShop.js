@@ -20,4 +20,5 @@ router.put('/:coffeeShopId/reviews/:reviewId', checkAuth, coffeeShopCtrl.updateR
 router.delete('/:coffeeShopId', checkAuth, coffeeShopCtrl.deleteShop)
 router.delete('/:coffeeShopId/reviews/:reviewId', checkAuth, coffeeShopCtrl.deleteReview)
 
+
 export { router }
