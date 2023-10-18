@@ -41,7 +41,9 @@ async function show(req, res) {
 async function update(req, res) {
   try {
     req.body.location = req.body.address.city
-    const selectedShop = await CoffeeShop.findByIdAndUpdate(req.params.coffeeShopId, req.body, { new: true }).populate('addedBy')
+    const selectedShop = await CoffeeShop.findByIdAndUpdate(
+      req.params.coffeeShopId, req.body, { new: true }
+    ).populate('addedBy')
     res.status(201).json(selectedShop)
   } catch (error) {
     console.log(error)
