@@ -1,6 +1,8 @@
 import { Profile } from "../models/profile.js"
 import { Club } from "../models/club.js"
 
+
+
 async function index(req, res) {
   try {
     const clubs = await Club.find({}).populate('addedBy')

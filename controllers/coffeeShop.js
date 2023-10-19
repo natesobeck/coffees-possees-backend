@@ -1,5 +1,6 @@
 import { Profile } from "../models/profile.js"
 import { CoffeeShop } from "../models/coffeeShop.js"
+import { Club } from "../models/club.js"
 
 async function index(req, res) {
   try {
@@ -41,7 +42,9 @@ async function show(req, res) {
 async function update(req, res) {
   try {
     req.body.location = req.body.address.city
-    const selectedShop = await CoffeeShop.findByIdAndUpdate(req.params.coffeeShopId, req.body, { new: true }).populate('addedBy')
+    const selectedShop = await CoffeeShop.findByIdAndUpdate(
+      req.params.coffeeShopId, req.body, { new: true }
+    ).populate('addedBy')
     res.status(201).json(selectedShop)
   } catch (error) {
     console.log(error)
@@ -105,6 +108,18 @@ async function deleteReview(req, res) {
   }
 }
 
+async function addClubToShop(req,res) {
+  try {
+    const selectedShop = await CoffeeShop.findById(req.params.coffeeShopId)
+    const selectedClub = await Club.findById(req.params.clubId)
+    selectedShop.clubs.push(selectedClub)
+    await selectedShop.save()
+    res.status(200).json(selectedShop)
+  } catch (error) {
+    res.status(500).json(error)
+  }
+}
+
 export {
-  index, create, show, update, deleteShop, createReview, updateReview, deleteReview
+  index, create, show, update, deleteShop, createReview, updateReview, deleteReview, addClubToShop
 }
