@@ -17,10 +17,8 @@ async function create(req, res) {
   try {
     req.body.addedBy = req.user.profile
     const club = await Club.create(req.body)
-    // Find profile and push club to array
     const profile = await Profile.findByIdAndUpdate(req.user.profile,
       { $push: { clubs: club } }, { new: true })
-    // Add addedBy's profile to club's addedBy
     club.addedBy = profile
     res.status(201).json(club)
 
@@ -59,7 +57,6 @@ async function update(req, res) {
 async function deleteClub(req, res) {
   try {
     const selectedClub = await Club.findByIdAndDelete(req.params.clubId)
-    // Search and remove the club from profile
     const profile = await Profile.findById(req.user.profile)
     profile.clubs.remove({ _id: req.params.clubId })
     await profile.save()
