@@ -14,6 +14,8 @@ router.use(decodeUserFromToken)
 router.post('/', checkAuth, coffeeShopCtrl.create)
 router.post('/:coffeeShopId/reviews',checkAuth, coffeeShopCtrl.createReview)
 
+router.post('/:coffeeShopId/:clubId', checkAuth, coffeeShopCtrl.addClubToShop)
+
 router.put('/:coffeeShopId', checkAuth, coffeeShopCtrl.update)
 router.put('/:coffeeShopId/reviews/:reviewId', checkAuth, coffeeShopCtrl.updateReview)
 
